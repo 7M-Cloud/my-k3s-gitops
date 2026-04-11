@@ -8,7 +8,7 @@ grafana:
     size: 2Gi
 
   # Define your admin password (or use a secret reference)
-  adminPassword: "password"
+  adminPassword: password
 
   # Automatically setup data sources (e.g., Prometheus)
   datasources:
