@@ -17,7 +17,7 @@ spec:
       project: default
       source:
         # Point this to your personal repo
-        repoURL: 'https://github.com/YOUR_USERNAME/YOUR_REPO.git'
+        repoURL: 'https://github.com/7M-Cloud/my-k3s-gitops.git'
         targetRevision: HEAD
         path: charts/grafana # Path to where the chart lives in your repo
         helm:
