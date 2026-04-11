@@ -1,10 +1,11 @@
 apiVersion: v2
 name: my-grafana
-description: Grafana deployment for K3s
+description: My custom Grafana deployment for K3s
 type: application
 version: 1.0.0
-appVersion: "10.0.0"
+appVersion: "10.0.0" # This refers to the Grafana software version
+
 dependencies:
   - name: grafana
-    version: 7.x.x
-    repository: https://github.io
+    version: 8.5.x # The version of the official Helm chart
+    repository: https://grafana.github.io/helm-charts
