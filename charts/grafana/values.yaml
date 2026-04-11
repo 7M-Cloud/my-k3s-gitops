@@ -8,7 +8,7 @@ grafana:
     size: 2Gi
 
   # Define your admin password (or use a secret reference)
-  adminPassword: password
+  adminPassword: "password"
 
   # Automatically setup data sources (e.g., Prometheus)
   datasources:
@@ -21,10 +21,6 @@ grafana:
         access: proxy
         isDefault: true
 
-  # Example of an Ingress setup if you have Traefik (K3s default)
-grafana:
-  enabled: true
-  # ... (persistence and other settings from before)
   
   ingress:
     enabled: true
