@@ -9,7 +9,7 @@ spec:
         elements:
           - cluster: in-cluster
             url: https://kubernetes.default.svc
-            namespace: monitoring
+            namespace: monitoringpwd
   template:
     metadata:
       name: '{{cluster}}-grafana'
@@ -19,7 +19,7 @@ spec:
         # Point this to your personal repo
         repoURL: 'https://github.com/7M-Cloud/my-k3s-gitops.git'
         targetRevision: HEAD
-        path: charts/grafana # Path to where the chart lives in your repo
+        path: my-k3s-gitops/charts/grafana # Path to where the chart lives in your repo
         helm:
           valueFiles:
             - values.yaml
