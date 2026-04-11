@@ -1,0 +1,17 @@
+# charts/grafana/values.yaml
+grafana:
+  enabled: true
+  adminPassword: "password" # Change this!
+  service:
+    type: ClusterIP
+    port: 80
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: traefik # Default for K3s
+    hosts:
+      - grafana.local
+  persistence:
+    enabled: true
+    size: 5Gi
+    storageClassName: local-path # Default storage for K3s
