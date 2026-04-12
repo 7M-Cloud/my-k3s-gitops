@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: platform
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: projects
+            path: platform/projects
+          - name: appsets
+            path: platform/appsets
+  template:
+    metadata:
+      name: platform-{{name}}
+    spec:
+      project: platform
+      source:
+        repoURL: https://github.com/7M-Cloud/my-k3s-gitops.git
+        targetRevision: main
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: argocd
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
