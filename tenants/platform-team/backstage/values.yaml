@@ -8,8 +8,7 @@ backstage:
         port: 7007
 ingress:
   enabled: true
-  ingressClassName: traefik
-  hosts:
-    - host: backstage.localhost
-      paths:
-        - /
+  className: traefik
+  host: backstage.localhost
+  paths:
+    - /
