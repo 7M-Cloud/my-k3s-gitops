@@ -1,55 +1,78 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: root-app:argoproj.io/ApplicationSet:argocd/platform-appset
+  creationTimestamp: '2026-04-12T21:08:12Z'
+  generation: 1
   name: platform-appset
   namespace: argocd
+  resourceVersion: '10236'
+  uid: c86b969e-456d-4797-8978-1ebb5e7463ab
 spec:
   generators:
     - list:
         elements:
-          - name: prometheus
-            project: platform
+          - chart: kube-prometheus-stack
+            name: prometheus
             namespace: monitoring
+            project: platform
             repo: https://prometheus-community.github.io/helm-charts
-            chart: kube-prometheus-stack
-            version: 67.*
             values: tenants/monitoring/prometheus/values.yaml
-          - name: grafana
-            project: platform
+            version: 67.*
+          - chart: grafana
+            name: grafana
             namespace: monitoring
+            project: platform
             repo: https://grafana-community.github.io/helm-charts
-            chart: grafana
-            version: 6.24.1
             values: tenants/monitoring/grafana/values.yaml
-          - name: backstage
-            project: tenants
+            version: 6.24.1
+          - chart: backstage
+            name: backstage
             namespace: backstage
+            project: tenants
             repo: https://backstage.github.io/charts
-            chart: backstage
-            version: 2.6.3
             values: tenants/platform-team/backstage/values.yaml
+            version: 2.6.3
   template:
     metadata:
       name: '{{name}}'
       namespace: argocd
     spec:
-      project: '{{project}}'
       destination:
-        server: https://kubernetes.default.svc
         namespace: '{{namespace}}'
+        server: https://kubernetes.default.svc
+      project: '{{project}}'
       sources:
-        - repoURL: '{{repo}}'
-          chart: '{{chart}}'
-          targetRevision: '{{version}}'
+        - chart: '{{chart}}'
           helm:
             valueFiles:
               - $values/{{values}}
-        - repoURL: https://github.com/7M-Cloud/my-k3s-gitops.git
+          repoURL: '{{repo}}'
+          targetRevision: '{{version}}'
+        - ref: values
+          repoURL: https://github.com/7M-Cloud/my-k3s-gitops.git
           targetRevision: main
-          ref: values
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
+status:
+  conditions:
+    - lastTransitionTime: '2026-04-12T21:08:12Z'
+      message: error parsing values map
+      reason: ApplicationGenerationFromParamsError
+      status: 'True'
+      type: ErrorOccurred
+    - lastTransitionTime: '2026-04-12T21:08:12Z'
+      message: error parsing values map
+      reason: ErrorOccurred
+      status: 'False'
+      type: ParametersGenerated
+    - lastTransitionTime: '2026-04-12T21:08:12Z'
+      message: error parsing values map
+      reason: ErrorOccurred
+      status: 'False'
+      type: ResourcesUpToDate
