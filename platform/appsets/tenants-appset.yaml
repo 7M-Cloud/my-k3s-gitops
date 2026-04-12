@@ -6,9 +6,9 @@ metadata:
 spec:
   generators:
     - directory:
-        # We target the specific app folders to avoid managing the root 'tenants' folder
-        path: tenants/*/* exclude:
-          # Exclude the namespace files so the 'CreateNamespace=true' option handles it
+        # Targets app folders (e.g., tenants/monitoring/grafana)
+        path: tenants/*/*
+        exclude:
           - tenants/monitoring/namespace.yaml
           - tenants/platform-team/namespaces.yaml
   template:
@@ -22,7 +22,7 @@ spec:
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
-        # segments[1] picks 'monitoring' or 'platform-team' from the path
+        # Dynamically picks the namespace (e.g., 'monitoring' or 'platform-team')
         namespace: '{{path.segments[1]}}' 
       syncPolicy:
         automated:
