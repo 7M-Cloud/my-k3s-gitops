@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: platform
+  name: platform-manager
   namespace: argocd
 spec:
   generators:
@@ -13,9 +13,9 @@ spec:
             path: platform/appsets
   template:
     metadata:
-      name: platform-{{name}}
+      name: 'platform-{{name}}'
     spec:
-      project: platform
+      project: platform # This uses the project you just created!
       source:
         repoURL: https://github.com/7M-Cloud/my-k3s-gitops.git
         targetRevision: main

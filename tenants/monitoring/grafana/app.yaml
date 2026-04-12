@@ -2,7 +2,12 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: grafana
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2" # 👈 Deploy after namespace
 spec:
+  project: tenants
+  # ... existing source and destination config ...
   project: tenants
   source:
     repoURL: https://grafana.github.io/helm-charts

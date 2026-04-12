@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tenant-workloads
+  namespace: argocd
+spec:
+  generators:
+    - directory:
+        path: tenants/**/* # Recursively finds all subfolders
+        exclude:
+          - tenants/monitoring # Excludes the parent folder itself
+          - tenants/platform-team
+  template:
+    metadata:
+      name: '{{path.basename}}' # This becomes "backstage", "grafana", etc.
+    spec:
+      project: tenants # Uses the tenant project for workload security
+      source:
+        repoURL: https://github.com/7M-Cloud/my-k3s-gitops.git
+        targetRevision: main
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}' # Deploys to a namespace named after the app
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring-bootstrap
+  namespace: argocd
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/7M-Cloud/my-k3s-gitops.git
+    targetRevision: main
+    path: tenants/monitoring
+    directory:
+      # This ensures we only sync the namespace.yaml in the monitoring folder
+      include: 'namespace.yaml' 
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
