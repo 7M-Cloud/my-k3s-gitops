@@ -15,7 +15,7 @@ spec:
     metadata:
       name: 'platform-{{name}}'
     spec:
-      project: platform # This uses the project you just created!
+      project: default # 🔑 Using 'default' allows it to create the 'platform' project
       source:
         repoURL: https://github.com/7M-Cloud/my-k3s-gitops.git
         targetRevision: main

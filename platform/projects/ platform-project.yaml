@@ -6,10 +6,10 @@ metadata:
 spec:
   description: "Management project for cluster infrastructure"
   sourceRepos:
-    - '*' # In production, you'd limit this to your specific Git URL
+    - '*' 
   destinations:
-    - namespace: '*' # Allows platform tools to reach any namespace
+    - namespace: '*' # 🌐 Allows platform tools to reach any namespace
       server: https://kubernetes.default.svc
   clusterResourceWhitelist:
     - group: '*'
-      kind: '*' # Allows creating Namespaces, CRDs, and RBAC
+      kind: '*' # 🏗️ Allows creating Namespaces, CRDs, and RBAC
