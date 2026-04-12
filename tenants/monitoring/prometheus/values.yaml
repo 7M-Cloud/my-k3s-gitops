@@ -1,16 +1,25 @@
-prometheus:
-  ingress:
-    enabled: true
-    ingressClassName: traefik
-    hosts:
-      - prometheus.localhost
-
 grafana:
   enabled: false
 
+prometheus:
+  prometheusSpec:
+    retention: 15d
+
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      hosts:
+        - host: prometheus.localhost
+          paths:
+            - /
+
 alertmanager:
+  enabled: true
+
   ingress:
     enabled: true
     ingressClassName: traefik
     hosts:
-      - alertmanager.localhost
+      - host: alertmanager.localhost
+        paths:
+          - /
