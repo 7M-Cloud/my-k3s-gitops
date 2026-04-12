@@ -6,25 +6,26 @@ metadata:
 spec:
   generators:
     - directory:
-        path: tenants/**/* # Recursively finds all subfolders
+        path: tenants/**/*
         exclude:
-          - tenants/monitoring # Excludes the parent folder itself
-          - tenants/platform-team
+          - tenants/monitoring/namespace.yaml
+          - tenants/platform-team/namespaces.yaml
   template:
     metadata:
-      name: '{{path.basename}}' # This becomes "backstage", "grafana", etc.
+      name: '{{path.basename}}'
     spec:
-      project: tenants # Uses the tenant project for workload security
+      project: tenants
       source:
         repoURL: https://github.com/7M-Cloud/my-k3s-gitops.git
         targetRevision: main
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{path.basename}}' # Deploys to a namespace named after the app
+        # This tells ArgoCD to use the parent folder name as the target namespace
+        namespace: '{{path.segments[1]}}' 
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
         syncOptions:
-          - CreateNamespace=true
+          - CreateNamespace=true # 👈 This automatically creates the namespace if missing
