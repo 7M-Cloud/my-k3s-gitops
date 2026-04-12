@@ -1,13 +1,8 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: ConfigMap
 metadata:
-  name: argocd-server
+  name: argocd-cmd-params-cm
   namespace: argocd
-spec:
-  template:
-    spec:
-      containers:
-        - name: argocd-server
-          args:
-            - --insecure
-            - --rootpath=/
+data:
+  server.insecure: "true"
+  server.rootpath: "/"
