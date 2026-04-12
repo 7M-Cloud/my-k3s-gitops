@@ -3,19 +3,25 @@ kind: Application
 metadata:
   name: root-app
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
+
   source:
     repoURL: https://github.com/7M-Cloud/my-k3s-gitops.git
     targetRevision: main
     path: platform
     directory:
       recurse: true
+
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
+
+  ignoreDifferences:
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: applicationsets.argoproj.io
+
   syncPolicy:
     automated:
       prune: true
