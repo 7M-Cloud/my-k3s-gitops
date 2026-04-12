@@ -1,6 +1,10 @@
 grafana:
   enabled: false
 
+grafana:
+  rbac:
+    pspEnabled: false
+
 prometheus:
   ingress:
     enabled: true
