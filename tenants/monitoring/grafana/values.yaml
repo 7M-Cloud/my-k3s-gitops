@@ -1,6 +1,7 @@
+service:
+  type: ClusterIP
 ingress:
   enabled: true
   ingressClassName: traefik
   hosts:
-    - grafana.local
-adminPassword: password
+    - grafana.localhost

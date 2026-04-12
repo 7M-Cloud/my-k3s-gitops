@@ -1,4 +1,15 @@
+backstage:
+  appConfig:
+    app:
+      baseUrl: http://backstage.localhost
+    backend:
+      baseUrl: http://backstage.localhost
+      listen:
+        port: 7007
 ingress:
   enabled: true
   ingressClassName: traefik
-  host: backstage.local
+  hosts:
+    - host: backstage.localhost
+      paths:
+        - /

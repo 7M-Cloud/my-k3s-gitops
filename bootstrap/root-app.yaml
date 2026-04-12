@@ -4,13 +4,15 @@ metadata:
   name: root-app
   namespace: argocd
   finalizers:
-    - resources-finalizer.argocd.argoproj.io # Ensures cascading deletion
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
     repoURL: https://github.com/7M-Cloud/my-k3s-gitops.git
     targetRevision: main
-    path: platform/appsets # This tells the Root App where to look for your "Engine"
+    path: platform
+    directory:
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
@@ -20,3 +22,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true

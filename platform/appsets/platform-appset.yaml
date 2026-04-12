@@ -1,28 +1,55 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: platform-manager
+  name: platform-appset
   namespace: argocd
 spec:
   generators:
     - list:
         elements:
-          - name: projects
-            path: platform/projects
-          # ❌ Removed 'appsets' path to prevent the SharedResourceWarning
+          - name: prometheus
+            project: platform
+            namespace: monitoring
+            repo: https://prometheus-community.github.io/helm-charts
+            chart: kube-prometheus-stack
+            version: 67.*
+            values: tenants/monitoring/prometheus/values.yaml
+          - name: grafana
+            project: platform
+            namespace: monitoring
+            repo: https://grafana-community.github.io/helm-charts
+            chart: grafana
+            version: 6.24.1
+            values: tenants/monitoring/grafana/values.yaml
+          - name: backstage
+            project: tenants
+            namespace: backstage
+            repo: https://backstage.github.io/charts
+            chart: backstage
+            version: 2.6.3
+            values: tenants/platform-team/backstage/values.yaml
   template:
     metadata:
-      name: 'platform-{{name}}'
+      name: '{{name}}'
+      namespace: argocd
     spec:
-      project: default 
-      source:
-        repoURL: https://github.com/7M-Cloud/my-k3s-gitops.git
-        targetRevision: main
-        path: '{{path}}'
+      project: '{{project}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: argocd
+        namespace: '{{namespace}}'
+      sources:
+        - repoURL: '{{repo}}'
+          chart: '{{chart}}'
+          targetRevision: '{{version}}'
+          helm:
+            valueFiles:
+              - $values/{{values}}
+        - repoURL: https://github.com/7M-Cloud/my-k3s-gitops.git
+          targetRevision: main
+          ref: values
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
