@@ -6,13 +6,14 @@ metadata:
 spec:
   generators:
     - directory:
-        path: tenants/**/*
-        exclude:
+        # We target the specific app folders to avoid managing the root 'tenants' folder
+        path: tenants/*/* exclude:
+          # Exclude the namespace files so the 'CreateNamespace=true' option handles it
           - tenants/monitoring/namespace.yaml
           - tenants/platform-team/namespaces.yaml
   template:
     metadata:
-      name: '{{path.basename}}'
+      name: 'tenant-{{path.basename}}'
     spec:
       project: tenants
       source:
@@ -21,11 +22,11 @@ spec:
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
-        # This tells ArgoCD to use the parent folder name as the target namespace
+        # segments[1] picks 'monitoring' or 'platform-team' from the path
         namespace: '{{path.segments[1]}}' 
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
         syncOptions:
-          - CreateNamespace=true # 👈 This automatically creates the namespace if missing
+          - CreateNamespace=true
