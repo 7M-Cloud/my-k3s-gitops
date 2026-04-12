@@ -9,9 +9,7 @@ spec:
         elements:
           - name: projects
             path: platform/projects
-          - name: appsets
-            path: platform/appsets
-  template:
+    template:
     metadata:
       name: 'platform-{{name}}'
     spec:
