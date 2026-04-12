@@ -10,5 +10,3 @@ ingress:
   enabled: true
   className: traefik
   host: backstage.localhost
-  paths:
-    - /

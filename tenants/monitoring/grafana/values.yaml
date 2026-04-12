@@ -3,8 +3,9 @@ service:
 
 ingress:
   enabled: true
-  ingressClassName: traefik
+  annotations:
+    kubernetes.io/ingress.class: traefik
   hosts:
-    - host: grafana.localhost
-      paths:
-        - /
+    - grafana.localhost
+  path: /
+  pathType: Prefix

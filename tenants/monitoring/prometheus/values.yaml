@@ -2,24 +2,21 @@ grafana:
   enabled: false
 
 prometheus:
-  prometheusSpec:
-    retention: 15d
-
-    ingress:
-      enabled: true
-      ingressClassName: traefik
-      hosts:
-        - host: prometheus.localhost
-          paths:
-            - /
-
-alertmanager:
-  enabled: true
-
   ingress:
     enabled: true
-    ingressClassName: traefik
+    annotations:
+      kubernetes.io/ingress.class: traefik
     hosts:
-      - host: alertmanager.localhost
-        paths:
-          - /
+      - prometheus.localhost
+    paths:
+      - /
+
+alertmanager:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: traefik
+    hosts:
+      - alertmanager.localhost
+    paths:
+      - /
