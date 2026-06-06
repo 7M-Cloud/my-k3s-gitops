@@ -6,6 +6,7 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: traefik
   hosts:
-    - grafana.localhost
-  path: /
-  pathType: Prefix
+    - host: grafana.localhost
+      paths:
+        - path: /
+          pathType: Prefix
