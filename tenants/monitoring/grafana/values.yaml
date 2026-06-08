@@ -13,3 +13,14 @@ ingress:
 # 👇 ADD THIS BLOCK TO FIX THE ERROR
 rbac:
   pspEnabled: false
+  # values.yaml
+additionalDataSources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+    isDefault: true
+    jsonData:
+      httpMethod: POST
+      manageAlerts: true
+      prometheusType: Prometheus
