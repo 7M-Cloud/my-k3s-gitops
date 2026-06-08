@@ -9,3 +9,7 @@ ingress:
     - grafana.localhost
   path: /
   pathType: Prefix
+
+# 👇 ADD THIS BLOCK TO FIX THE ERROR
+rbac:
+  pspEnabled: false
