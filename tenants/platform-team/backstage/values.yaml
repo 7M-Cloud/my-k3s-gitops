@@ -1,6 +1,10 @@
+global:
+  imageRegistry: ""
+
 backstage:
   image:
-    repository: docker.io/library/backstage-ai
+    registry: ""
+    repository: backstage-ai
     tag: "1.0"
     pullPolicy: Never
 
