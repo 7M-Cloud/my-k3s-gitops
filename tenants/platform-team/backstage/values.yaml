@@ -12,14 +12,33 @@ backstage:
     app:
       title: "K3s Platform AI Portal"
       baseUrl: http://backstage.localhost
+      extensions:
+        - page:catalog:
+            config:
+              path: /
 
     backend:
       baseUrl: http://backstage.localhost
       listen:
         port: 7007
 
+      # LAB ONLY: disables default backend auth enforcement
+      auth:
+        dangerouslyDisableDefaultAuthPolicy: true
+
+      cors:
+        origin: http://backstage.localhost
+        methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+        credentials: true
+
     organization:
       name: "Local Lab"
+
+    auth:
+      environment: development
+      providers:
+        guest:
+          dangerouslyAllowOutsideDevelopment: true
 
 ingress:
   enabled: true
