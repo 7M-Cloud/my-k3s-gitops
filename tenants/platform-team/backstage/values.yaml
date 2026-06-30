@@ -3,10 +3,20 @@ backstage:
     app:
       title: "K3s Platform AI Portal"
       baseUrl: http://backstage.localhost
+
     backend:
       baseUrl: http://backstage.localhost
       listen:
         port: 7007
+
+    organization:
+      name: "Local Lab"
+
+    # Disable notifications configuration for now
+    plugins:
+      notifications:
+        enabled: false
+
 ingress:
   enabled: true
   className: traefik
