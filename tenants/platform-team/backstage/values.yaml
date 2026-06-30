@@ -1,6 +1,7 @@
 backstage:
   appConfig:
     app:
+      title: "K3s Platform AI Portal"
       baseUrl: http://backstage.localhost
     backend:
       baseUrl: http://backstage.localhost
