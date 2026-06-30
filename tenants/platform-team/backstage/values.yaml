@@ -1,4 +1,9 @@
 backstage:
+  image:
+    repository: docker.io/library/backstage-ai
+    tag: "1.0"
+    pullPolicy: Never
+
   appConfig:
     app:
       title: "K3s Platform AI Portal"
@@ -11,11 +16,6 @@ backstage:
 
     organization:
       name: "Local Lab"
-
-    # Disable notifications configuration for now
-    plugins:
-      notifications:
-        enabled: false
 
 ingress:
   enabled: true
