@@ -3,7 +3,6 @@ kind: AppProject
 metadata:
   name: tenants
   namespace: argocd
-
 spec:
   sourceRepos:
     - '*'
