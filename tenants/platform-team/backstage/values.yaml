@@ -17,10 +17,17 @@ backstage:
             config:
               path: /
 
+    proxy:
+      endpoints:
+        '/ai':
+          target: http://ai-agent.ai-agent.svc.cluster.local
+          changeOrigin: true
+
     backend:
       baseUrl: http://backstage.localhost
       listen:
         port: 7007
+        host: 0.0.0.0
 
       # LAB ONLY: disables default backend auth enforcement
       auth:
@@ -39,6 +46,9 @@ backstage:
       providers:
         guest:
           dangerouslyAllowOutsideDevelopment: true
+
+    permission:
+      enabled: false
 
 ingress:
   enabled: true
