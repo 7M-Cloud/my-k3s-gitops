@@ -3,11 +3,18 @@ kind: AppProject
 metadata:
   name: tenants
   namespace: argocd
+
 spec:
-  sourceRepos: ['*']
+  sourceRepos:
+    - '*'
+
   destinations:
     - namespace: backstage
       server: https://kubernetes.default.svc
+
+    - namespace: ai-agent
+      server: https://kubernetes.default.svc
+
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'

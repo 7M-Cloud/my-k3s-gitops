@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tenant-appset
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: ai-agent
+            project: tenants
+            namespace: ai-agent
+            repo: https://github.com/7M-Cloud/my-k3s-gitops.git
+            path: tenants/platform-team/ai-agent
+            revision: main
+
+  template:
+    metadata:
+      name: "{{name}}"
+      namespace: argocd
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: "{{project}}"
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{namespace}}"
+
+      source:
+        repoURL: "{{repo}}"
+        targetRevision: "{{revision}}"
+        path: "{{path}}"
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
